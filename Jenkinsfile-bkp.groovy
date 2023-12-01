@@ -54,28 +54,28 @@ if [ ! -z ${dev_example_com} ]; then
   target_string="dev.example.com"
   new_weight="${dev_example_com}"
   echo $new_weight
-  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+  update_file "${SERVICE}.tf" $target_string $new_weight
 fi
 
 if [ ! -z ${live_example_com} ]; then
   target_string="live.example.com"
   new_weight="${live_example_com}"
   echo $new_weight
-  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+  update_file "${SERVICE}.tf" $target_string $new_weight
 fi
 
 if [ ! -z ${prod_example_com} ]; then
   target_string="prod.example.com"
   new_weight="${prod_example_com}"
   echo $new_weight
-  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+  update_file "${SERVICE}.tf" $target_string $new_weight
 fi
 
 if [ ! -z ${nonprod_example_com} ]; then
   target_string="nonprod.example.com"
   new_weight="${nonprod_example_com}"
   echo $new_weight
-  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+  update_file "${SERVICE}.tf" $target_string $new_weight
 fi
 '''
             
