@@ -8,12 +8,76 @@ node {
     withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY'),
                      string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_KEY')]) {
         parameters {
-            string(name: 'TERRAFORM_FILE', defaultValue: 'tim.tf', description: 'Specify the Terraform file to run')
-            string(name: 'TARGET_NAME', defaultValue: 'www-rr', description: 'Target Name of the CNAME')
-            string(name: 'TARGET_RECORD', defaultValue: 'prod.example.com', description: 'Target Record')
-            string(name: 'NEW_WEIGHT', defaultValue: '0', description: 'New Weight for record change')
+            string(name: 'SERVICE', defaultValue: 'grid', description: 'Specify the Service name to run')
+            string(name: 'dev_example_com', defaultValue: '50', description: 'Target Record')
+            string(name: 'live_example_com', defaultValue: '50', description: 'Target Record')
+            string(name: 'prod_example_com', defaultValue: '50', description: 'Target Record')
+            string(name: 'nonprod_example_com', defaultValue: '50', description: 'Target Record')
         }
         stage('Update file') {
+            sh '''
+#!/bin/bash
+update_file (){
+    local file_path="$1"
+    local target_string="$2"
+    local new_weight="$3"
+
+# Search for the target string and its associated weight
+    while IFS= read -r line; do
+        if [[ "$line" == *"$target_string"* ]]; then
+            # If the target string is found, find the weight in the previous lines
+            line_number=$(grep -n "$target_string" "$file_path" | cut -d: -f1)
+            #echo $line_number
+            while [ "$line_number" -gt 1 ]; do
+                line_number=$((line_number - 1))
+                previous_line=$(sed -n "${line_number}p" "$file_path")
+                if [[ "$previous_line" == *weight* ]]; then
+                    echo $previous_line
+                    echo $line_number
+                    # Extract the current weight value
+                    current_weight=$(echo "$previous_line" | grep -o '[[:digit:]]*')
+                    # Update the weight value (replace 'new_weight' with the desired value)
+                    #update_weight "$file_path" "$line_number" "$new_weight" $current_weight
+                    sed -i -e "${line_number}s/${current_weight}/${new_weight}/1" "$file_path"
+
+                    echo "Weight updated from $current_weight to $new_weight."
+                    break
+                fi
+            done
+        fi
+    done < "$file_path"
+}
+
+
+
+if [ ! -z ${dev_example_com} ]; then
+  target_string="dev.example.com"
+  new_weight="${dev_example_com}"
+  echo $new_weight
+  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+fi
+
+if [ ! -z ${live_example_com} ]; then
+  target_string="live.example.com"
+  new_weight="${live_example_com}"
+  echo $new_weight
+  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+fi
+
+if [ ! -z ${prod_example_com} ]; then
+  target_string="prod.example.com"
+  new_weight="${prod_example_com}"
+  echo $new_weight
+  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+fi
+
+if [ ! -z ${nonprod_example_com} ]; then
+  target_string="nonprod.example.com"
+  new_weight="${nonprod_example_com}"
+  echo $new_weight
+  update_file "/Users/nbc404/Documents/sourcecode/test3/${SERVICE}.tf" $target_string $new_weight
+fi
+'''
             
       }
     }
