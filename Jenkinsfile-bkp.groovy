@@ -15,7 +15,7 @@ node {
             string(name: 'nonprod_example_com', defaultValue: '50', description: 'Target Record')
         }
         stage('Update file') {
-            def SERVICES = params.SERVICE
+            def SERVICE = params.SERVICE_NAME
             sh '''
 #!/bin/bash
 update_file (){
