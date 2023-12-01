@@ -89,7 +89,10 @@ fi
             sh "git config user.name bshanmugaraj"
             sh "git add ."
             sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
+            sh "git remote add origin https://@github.com/bshanmugaraj/test3.git"
             sh "git push https://@github.com/bshanmugaraj/test3.git"
+            sh "git push origin HEAD:master"
+                
         }
      }
   }
