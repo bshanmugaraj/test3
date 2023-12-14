@@ -81,7 +81,7 @@ fi
 '''
             
       }
-        /*stage('Update GIT') {
+        stage('Update GIT') {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             // withCredentials([usernamePassword(credentialsId: 'example-secure', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             //     def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
@@ -89,13 +89,7 @@ fi
             sh "git config user.name bshanmugaraj"
             sh "git add ."
             sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://github.com/bshanmugaraj/test3.git HEAD:master" */
-  post {
-    success {
-            sh "git config user.name bshanmugaraj"
-            sh "git add ."
-            sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://github.com/bshanmugaraj/test3.git HEAD:master"   
+            sh "git push https://github.com/bshanmugaraj/test3.git" 
                 
         }
      }
