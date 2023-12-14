@@ -87,7 +87,7 @@ fi
             sh "git config user.email shanmugarajb.97@gmail.com"
             sh "git config user.name bshanmugaraj"
             sh "git add ."
-            sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
+            sh "git commit -m 'Commited on Traffic shaping triggered Build: ${env.BUILD_NUMBER}'"
             sh "git push git@github.com:bshanmugaraj/test3.git HEAD:master"     
             }
         }
