@@ -81,7 +81,7 @@ fi
 '''
             
       }
-        stage('Update GIT') {
+        stage('Commit GIT') {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             withCredentials([sshUserPrivateKey(credentialsId: 'eeadb089-6f96-412c-96f8-0e7b2f348d49', keyFileVariable: 'jenkins')]) {
             sh "git config user.email shanmugarajb.97@gmail.com"
