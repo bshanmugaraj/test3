@@ -89,7 +89,7 @@ fi
             sh "git config user.name bshanmugaraj"
             sh "git add ."
             sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://${Username}:${encodedPassword}@github.com/${Username}/bshanmugaraj/test3.git HEAD:master"     
+            sh "git push https://${Username}:${encodedPassword}@github.com/${Username}/test3.git HEAD:master"     
             }
         }
      }
