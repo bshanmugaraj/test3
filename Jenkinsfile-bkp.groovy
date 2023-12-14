@@ -83,13 +83,12 @@ fi
       }
         stage('Update GIT') {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-            withCredentials([usernamePassword(credentialsId: '2ff250db-94ee-4ead-bcc6-d37571d979f0', passwordVariable: 'Password', usernameVariable: 'Username')]) {
-            def encodedPassword = URLEncoder.encode("$Password",'UTF-8')
+            withCredentials([sshUserPrivateKey(credentialsId: 'eeadb089-6f96-412c-96f8-0e7b2f348d49', keyFileVariable: 'ec2-user')]) {
             sh "git config user.email shanmugarajb.97@gmail.com"
             sh "git config user.name bshanmugaraj"
             sh "git add ."
             sh "git commit -m 'Commit triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://${Username}:${encodedPassword}@github.com/${Username}/test3.git HEAD:master"     
+            sh "git push https://@github.com/bshanmugaraj/test3.git"     
             }
         }
      }
