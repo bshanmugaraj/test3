@@ -19,7 +19,7 @@ resource "aws_route53_record" "tim-us-east-1" {
   ttl     = 5
 
   weighted_routing_policy {
-    weight = 50
+    weight = 100
   }
 
   set_identifier = "tim-us-east-1"
